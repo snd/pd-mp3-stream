@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+set -ex
+
+jack-stdout system:capture_1 system:capture_2 \
+| ffmpeg -probesize 32 -f s16le -ac 2 -sample_rate 48000 -i - -f mp3 -sample_rate 44100 - \
+| socat -b 1024 - TCP:localhost:9091
